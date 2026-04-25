@@ -52,26 +52,26 @@ This cipher is slightly more secure than the Caesar cipher as there are more pos
 
 A *group* is a set $G$ together with a binary operation $*$ such that:
 
-1. (*Closure*) For all $a, b \in G$, the result $a * b \in G$.
-2. (*Associativity*) For all $a, b, c \in G$, $(a * b) * c = a * (b * c)$.
-3. (*Identity element*) There exists an element $e \in G$ such that $a * e = e * a = a$ for all $a \in G$.
-4. (*Inverse element*) For every $a \in G$, there exists an element $a^{-1} \in G$ such that $a * a^{-1} = a^{-1} * a = e$.
+1. (*Closure*) For all $a, b in G$, the result $a * b in G$.
+2. (*Associativity*) For all $a, b, c in G$, $(a * b) * c = a * (b * c)$.
+3. (*Identity element*) There exists an element $e in G$ such that $a * e = e * a = a$ for all $a in G$.
+4. (*Inverse element*) For every $a in G$, there exists an element $a^{-1} in G$ such that $a * a^{-1} = a^{-1} * a = e$.
 
 An important example in cryptography is the set of permutations of a finite set. The set of all permutations on $n$ elements forms a group under composition, called the symmetric group $S_n$.
 
 These permutations can be composed and inverted, meaning that encryption and decryption operations form a group under composition. This algebraic structure helps explain why certain ciphers are easy or difficult to break.
 
 
-#let theorem = thmbox("FLT", "Theorem", fill: rgb("#eeffee"))
-
-#theorem("FLT")[
-  In a right-angled triangle, the square of the hypotenuse is equal to the sum of the squares of the other two sides.
-] <FLT>
-
-As seen in @FLT, the relationship holds...
-
 = Discrete Logarithm Problem(DLP)
-tbd
+The DLP is the problem of finding an integer $k$ such that $g^k equiv h " "(mod p)$, given $g$, $h$, and a prime $p$.
+If one can find such a solution, then there must be infinitely many solutions. As given in the FLT, assume k is a solution
+$
+g^k equiv h " "(mod p) \ 
+g^(k + m(p-1)) equiv g^k g^(m(p-1)) equiv g^k equiv h " "(mod p)
+$
+Thus, the Discrete Logarithm Problem is only defined module $p-1$. 
+It is widely accepted that the DLP is hard to solve.
+Classical algorithms like the Baby-step Giant-step algorithm and Pollard's rho algorithm still take roughly $O(sqrt(p))$ time to solve the DLP. 
 
 = Diffie Hellman//Maybe need change it to canvas example
 
@@ -149,17 +149,19 @@ $ (g^a)^b = (g^b )^a " "(mod p) $
   ]
 ]
 
-= Euclidean Algorithm
-tbd along with extend
 
-= Fermat Little Theorem(FLT)
+#let theorem = thmbox("FLT", "Theorem", fill: rgb("#eeffee"))
 
-*Theorem: * If $p$ is a prime and $a$ is an integer not divisible by $p$, then 
+#theorem("FLT")[
+If $p$ is a prime and $a$ is an integer not divisible by $p$, then 
 
-$ a^(p-1) equiv 1 " "(mod p) $.
+$ a^(p-1) equiv 1 " "(mod p) $
 Or similiarly:
 
-$ a^(p) equiv a " "(mod p) $.
+$ a^(p) equiv a " "(mod p) $
+] <FLT>
+
+= Proof of Fermat's Little Theorem(FLT)
 
 We can proof via more generalised Euler's theorem $a^phi(n) equiv 1 " "(mod n)$ or formal proof of FLT using bionmial distrubution. We will choose the latter, which is more intuitive and easier to understand. (To proof Euler's theorem, please refer to appendix)
 
@@ -259,7 +261,7 @@ This works because by Euler's theorem $a^phi(n) equiv 1 " "(mod n)$:
 $ C^d equiv (M^e)^d equiv M^(e d) equiv M^(1 + k phi(n)) equiv M mod n $
 
 == Security
-The current best algorithm to attack RSA is to factor intgers. By using General Number Field Sieve, the time complexity is sub-exponential in the size of $n$ or $f(x)=e^((c+o(1))(ln n)^(1/3)(ln ln n)^(2/3)), "where "c = 1.923$. 
+The current best algorithm to attack RSA is to factor integers. By using General Number Field Sieve, the time complexity is sub-exponential in the size of $n$ or $f(x)=e^((c+o(1))(ln n)^(1/3)(ln ln n)^(2/3)), "where "c = 1.923$. 
 
 Taking $o(1) = 20$ When $n = 2^256 $, $f(n) approx n^2.08$. At $n=2^2048, f(n) approx n^0.651$, roughly $10^375$ computational years. 
 
@@ -277,3 +279,20 @@ However, with Shor's algorithm, the time complexity is polynomial in the size of
 and all the others
 
 == Euler's Theorem
+
+= Appendix
+== Euclidean Algorithm
+This algorithm is used to find the greatest common divisor of two numbers.
+Notice that the greatest common divisor of two numbers is one when the numbers do not share any common factors other than one (hence are *coprime*). 
+This goes both ways, hence we say that two numbers are *coprime* if and only if their greatest common divisor is one. \
+First notice 
+$ gcd(a, b)$ is the greatest common divisor of $a$ and $b$.
+let $g = gcd(a, b)$ \
+Then we can write $a = g a'$ and $b = g b'$ for some integers $a'$ and $b'$. \
+if $g | a " and " g | b, " then " g | a - k b "for some integer k"$ 
+In other words, \ 
+$
+gcd(a, b) = gcd(a, b (mod a))
+$
+When we take $b (mod a)$ to be the remainder of $b$ when divided by $a$, the algorithm will eventually terminate when it reached $gcd(a_k, 0)$ 
+In this case, $g = a_k$ 
