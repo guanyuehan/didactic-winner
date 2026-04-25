@@ -27,7 +27,7 @@
 
 
 = Introduction
-#counter("Int")
+
 TBD
 
 == Caesar cipher 
@@ -150,6 +150,145 @@ $ (g^a)^b = (g^b )^a " "(mod p) $
 ]
 
 
+
+
+
+= RSA
+RSA(Rivest-Shamir-Adleman) is a widely used public-key cryptosystem that relies on the difficulty of factoring large integers. It allows for secure communication and digital signatures.
+
+== Key Generation
+
+A user generates an RSA keys as follows:
+
+1. Choose two distinct large prime numbers $p$ and $q$. (This are kept secret)
+2. Compute $n = p * q$. (This is part of the public key)
+3. Compute $ phi(n) = (p-1)(q-1)$. (This is kept secret)
+4. Choose an integer $e$ such that $1 < e < phi(n)$ and $gcd(e, phi(n)) = 1$. The integer $e$ is the public exponent and is part of the public key. A common choice for $e$ is 65537 = 2^16 + 1 to prevent small private exponents attack.
+5. Compute private exponent $d$ such that $d equiv e^(-1) mod phi(n)$, $d$ is the private exponent and should be kept secret.
+
+To summerise, $(n, e)$ is the public values and $(p, q, d)$ is the private values.
+
+== Encryption
+To encrypt a message $M$ (where $0 <= M < n$), the sender computes the ciphertext $C$ using the recipient's public key $(n, e)$ as follows:
+$ C equiv M^e mod n $
+
+== Decryption
+To decrypt the ciphertext $C$, the recipient uses their private key $d$ to compute the original message $M$ as follows:
+$ M equiv C^d mod n $
+
+This works because by Euler's theorem $a^phi(n) equiv 1 " "(mod n)$:
+$ C^d equiv (M^e)^d equiv M^(e d) equiv M^(1 + k phi(n)) equiv M mod n $
+
+== Security
+The current best algorithm to attack RSA is to factor integers. By using General Number Field Sieve, the time complexity is sub-exponential in the size of $n$ or $f(x)=e^((c+o(1))(ln n)^(1/3)(ln ln n)^(2/3)), "where "c = 1.923$. 
+
+Taking $o(1) = 20$ When $n = 2^256 $, $f(n) approx n^2.08$. At $n=2^2048, f(n) approx n^0.651$, roughly $10^375$ computational years. 
+
+However, with Shor's algorithm, the time complexity is polynomial in the size of $n$, at roughly $O((log n)^3)$. With 100k qubits, it is estimated that RSA-2048 can be broken in a few hours. 
+
+== Wiener's attack
+
+RSA system is very fragile when the key generation and encryption process is not done properly. We will be mainly focusing on Wiener's attack, which is a method of breaking RSA when the private exponent $d$ is small. (Look up RsaCTFTool for all kinds of RSA attacks).
+#let theorem = thmbox("Euler", "Theorem", fill: rgb("#eeffee"))
+
+#theorem("Wiener")[
+Given a public key $(e, n)$ where $n = p q$, if 
+$ d < 1/3 n^(1/4) $
+along with Legendre theorem on continued fractions, where $abs(x-a/b)<1/(2b^2)$, then $a/b$ is one of the convergents fraction of $x-a/b$. Then $d$ can be found using continued fractions quickly.
+]
+//End therom
+
+*Proof:*
+
+Wiener's attack relies on the fact that if $d$ is small, then the fraction $e/n$ can be approximated by a rational number with a small denominator, which corresponds to the private exponent $d$. This proof is challenging to follow, do ask questions if needed.
+
+=== Definition
+To start off, let $G = gcd(p, q)$ and let the Carmichael function be $lambda(n) = phi(n)/gcd(p, q) = lcm(p,q)$, then
+
+$ e d = 1 + k lambda(n) $
+
+=== Useful Lemmas
+*Lemma 1:* $N- phi(n)< 3sqrt(n)$
+
+*Proof*: Assuming standard RSA encryptions, $p < q < 2q$. Using $N=p q$ and $p < sqrt(n)$, we have $q < 2p = 2sqrt(n)$ and thus $p + q - 1 < sqrt(n) + 2sqrt(n) - 1 = 2sqrt(n) - 1 < 3sqrt(n)$. 
+
+Since $phi(n) = (p-1)(q-1)= p q -p -q+1$, $N-phi(N) = p-q+1<3sqrt(n)$
+
+*Lemma 2:* $k < d$
+
+*Proof*: $k lambda(n) = e d - 1 < e d$. Since using standard RSA encryption, $e < lambda(n)$, then $k lambda(n) < e d < d lambda(n)$. Cancelling $lambda(n)$, we obtain $k < d$.
+
+*Lemma 3*: $1/(2d) >1/N^(1/4)$
+
+*Proof*: $d < 1/3N^(1/4)$, $2d< 3d<N^(1/4)$, $1/(2d)>N^(1/4)$.
+
+=== Proof
+
+$ e d = 1 + k lambda(n) $
+$ e /phi(n) - k/ (G d) = 1/(d phi(n)) $
+
+Remember, our goal is to make an expression of $abs(x-a/b) < 1/(2b^2)$ with known values. Thus, we approximate $phi(n)$ with n.
+
+$ abs(e/n - k/(G d)) = abs((e d G -k N)/(N G d) ) $
+
+Since  $k phi(n) = G (k lambda(n)) = e d G$:
+$ 
+  abs((e d G - k N) / (N G d)) &= abs((e d G - k phi(n) - k N + k phi(n)) / (N G d)) \
+  &= abs((1 - k(N - phi(n))) / (N G d))  \
+  &< abs((1 - k(3 sqrt(n))) / (N G d))&"(Lemma 1)"\
+  &< abs((3k sqrt(n)) / (N G d)) \
+  &<=(3k)/(d sqrt(n)) \
+  &<(3d)/(d sqrt(n))&"(Lemma 2)"\
+  &=(3(1/3N^(1/4)))/(d sqrt(n)) \
+  &=1/(d N^(1/4))\
+  &<1/(2d^2)&"(Lemma 3)"
+$
+Therefore,
+$ abs(e/n - k/(G d))< 1/(2d^2) $
+which satisfy the condition since $e/n$ is known.
+
+== lattice attacks
+TBD
+
+#counter(heading).update(0)
+#set page(paper: "a4")
+
+#align(center)[
+  #block(inset: (top: 2em, bottom: 1em))[
+    #text(size: 1.5em, weight: "bold")[Appendix] \
+    #text(size: 1.2em, weight: "bold")[Supplemental Information]
+  ]
+]
+= Bijection Proofs
+
+== Bijection Proof for Caesar or Affine Cipher
+
+#let theorem = thmbox("Affine", "Theorem", fill: rgb("#eeffee"))
+
+#theorem("Affine")[
+
+Let $E(x) = a x + b " "(mod n)$ be the substitution function for the affine cipher, where $n$ is prime so that for all $a$, $gcd(a, n) = 1$. Then, E is a bijection from the set of integers modulo $n$ to itself.
+] <Affine>
+
+*Proof:*
+
+Let $i, j in {1, 2, dots, n-1}$ be distinct intgers, i.e. $i != j$. Without loss of generality (WLOG), let $i>j$. If $E(i) equiv E(j) mod n$, we have:
+
+$ a i + b equiv a j + b " "(mod n) $
+$ a (i - j) equiv 0 " "(mod n) $
+$ a (i - j) = k n  $ 
+
+Since $gcd(a, n) = 1$, by euclid lemma, $n | (i - j)$. However, since $0 < i - j < n$, i is not divisible by $n$. This is a contradiction and thus $i = j$.
+
+Via pigeonhole principle, since there are $n$ possible outputs and $n$ possible inputs, and no two input maps to the same output, each input must map to a unique output. Hence, $E$ is a bijection.
+
+This also proves caesar cipher is a bijection as it is a special case of affine cipher where $a = 1$.
+
+
+
+= Proof of Fermat's Little Theorem(FLT)
+
+We can proof via more generalised Euler's theorem $a^phi(n) equiv 1 " "(mod n)$ or formal proof of FLT using bionmial distrubution. We will choose the latter, which is more intuitive and easier to understand. (To proof Euler's theorem, it's further down in the appendix)
 #let theorem = thmbox("FLT", "Theorem", fill: rgb("#eeffee"))
 
 #theorem("FLT")[
@@ -160,10 +299,6 @@ Or similiarly:
 
 $ a^(p) equiv a " "(mod p) $
 ] <FLT>
-
-= Proof of Fermat's Little Theorem(FLT)
-
-We can proof via more generalised Euler's theorem $a^phi(n) equiv 1 " "(mod n)$ or formal proof of FLT using bionmial distrubution. We will choose the latter, which is more intuitive and easier to understand. (To proof Euler's theorem, please refer to appendix)
 
 *Proof: * 
 
@@ -234,54 +369,38 @@ $
 
 By the principle of mathematical induction, we have proved Fermat's Little Theorem.
 
-= RSA
-RSA(Rivest-Shamir-Adleman) is a widely used public-key cryptosystem that relies on the difficulty of factoring large integers. It allows for secure communication and digital signatures.
+= Euler's Theorem
+#let theorem = thmbox("Euler", "Theorem", fill: rgb("#eeffee"))
 
-== Key Generation
+#theorem("Euler")[
+If $a, n in ZZ$ such that $gcd(a, n) = 1$. Then:
 
-A user generates an RSA keys as follows:
+$ a^(phi(n)) equiv 1 " "(mod n) $
 
-1. Choose two distinct large prime numbers $p$ and $q$. (This are kept secret)
-2. Compute $n = p * q$. (This is part of the public key)
-3. Compute $ phi(n) = (p-1)(q-1)$. (This is kept secret)
-4. Choose an integer $e$ such that $1 < e < phi(n)$ and $gcd(e, phi(n)) = 1$. The integer $e$ is the public exponent and is part of the public key. A common choice for $e$ is 65537 = 2^16 + 1 to prevent small private exponents attack.
-5. Compute private exponent $d$ such that $d equiv e^(-1) mod phi(n)$, $d$ is the private exponent and should be kept secret.
 
-To summerise, $(n, e)$ is the public values and $(p, q, d)$ is the private values.
+] <Euler>
 
-== Encryption
-To encrypt a message $M$ (where $0 <= M < n$), the sender computes the ciphertext $C$ using the recipient's public key $(n, e)$ as follows:
-$ C equiv M^e mod n $
+*Proof:*
+Consider the set of integers $S = {r_1, r_2, dots, r_(phi(n))}$ which represent the reduced residue system modulo $n$. These are the integers in the range $[1, n]$ that are coprime to $n$.
 
-== Decryption
-To decrypt the ciphertext $C$, the recipient uses their private key $d$ to compute the original message $M$ as follows:
-$ M equiv C^d mod n $
+Since $gcd(a, n) = 1$, we can multiply each element in $S$ by $a$ to form a new set:
+$ S' = {a r_1, a r_2, dots, a r_(phi(n))} $
 
-This works because by Euler's theorem $a^phi(n) equiv 1 " "(mod n)$:
-$ C^d equiv (M^e)^d equiv M^(e d) equiv M^(1 + k phi(n)) equiv M mod n $
+We claim that $S'$ is also a reduced residue system modulo $n$ ,which is similiar to bijection proof for affine cipher. 
+// 1. Each $a r_i$ is coprime to $n$ because both $a$ and $r_i$ are coprime to $n$.
+// 2. No two elements in $S'$ are congruent modulo $n$. If $a r_i equiv a r_j thin (mod n)$, then $r_i equiv r_j thin (mod n)$ because $a$ is invertible modulo $n$. Since $r_i$ and $r_j$ are distinct elements of $S$, this is impossible unless $i = j$.
+Therefore, the set $S'$ is simply a permutation of $S$ modulo $n$. Multiplying the elements of both sets together gives:
+$ product_(i=1)^(phi(n)) a r_i equiv product_(i=1)^(phi(n)) r_i mod n $
 
-== Security
-The current best algorithm to attack RSA is to factor integers. By using General Number Field Sieve, the time complexity is sub-exponential in the size of $n$ or $f(x)=e^((c+o(1))(ln n)^(1/3)(ln ln n)^(2/3)), "where "c = 1.923$. 
+Factoring out $a$ from the product on the left:
+$ a^(phi(n)) (r_1 r_2 dots r_(phi(n))) equiv (r_1 r_2 dots r_(phi(n))) mod n $
 
-Taking $o(1) = 20$ When $n = 2^256 $, $f(n) approx n^2.08$. At $n=2^2048, f(n) approx n^0.651$, roughly $10^375$ computational years. 
+Let $P = product_(i=1)^(phi(n)) r_i$. Since each $r_i$ is coprime to $n$, their product $P$ is also coprime to $n$. This means $P$ has a multiplicative inverse modulo $n$. Multiplying both sides by $P^(-1)$ yields:
+$ a^(phi(n)) equiv 1 mod n $
 
-However, with Shor's algorithm, the time complexity is polynomial in the size of $n$, at roughly $O((log n)^3)$. With 100k qubits, it is estimated that RSA-2048 can be broken in a few hours. 
 
-== Weiner's attack
 
-== some stupid lattice attacks
-
-= Appendix
-
-== Bijection Proof 
-
-=== Bijection Proof for Affine Cipher
-and all the others
-
-== Euler's Theorem
-
-= Appendix
-== Euclidean Algorithm
+= Euclidean Algorithm
 This algorithm is used to find the greatest common divisor of two numbers.
 Notice that the greatest common divisor of two numbers is one when the numbers do not share any common factors other than one (hence are *coprime*). 
 This goes both ways, hence we say that two numbers are *coprime* if and only if their greatest common divisor is one. \
