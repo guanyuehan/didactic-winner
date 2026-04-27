@@ -35,8 +35,8 @@ Let the set of letters be $S = {A, B, C, ..., Z}$.
 This cipher is uses a bijective function $sigma : [1, 26] -> [1, 26] \
 c |-> c + k (mod 27)
 $ for some constant key k\
-For example set k = 12, the word \
-"APPLE" is $S_1 S_16 S_16 S_12 S_5$ -> $S_(sigma(1)) S_(sigma(16)) S_(sigma(16)) S_(sigma(12)) S_(sigma(5))$ -> "MCCYQ".
+For example set k = 2, the word \
+"BRANSON" is $S_2 S_18 S_1 S_19 S_15 S_4$ -> $S_(sigma(2)) S_(sigma(18)) S_(sigma(19)) S_(sigma(15)) S_(sigma(4))$ -> "EUDQVRQ".
 However, this cipher is easily broken when the trick is known as there are only 26 possible keys (k). 
 
 == Affine Cipher 
@@ -45,7 +45,7 @@ This cipher is uses a bijective function $sigma : [1, 26] -> [1, 26] \
 c |-> a c + k (mod 27)
 $ for some constants a and k where gcd(a, 27) = 1. (this ensures bijectivity) \ 
 For example set a = 5 and k = 8, the word \
-"APPLE" is $S_1 S_16 S_16 S_12 S_5$ -> $S_(sigma(1)) S_(sigma(16)) S_(sigma(16)) S_(sigma(12)) S_(sigma(5))$ -> "MGGNF". \
+"WACKY" is $S_22 S_0 S_2 S_10 S_24$ -> $S_(sigma(22)) S_(sigma(0)) S_(sigma(2)) S_(sigma(10)) S_(sigma(24))$ -> "VGNKB". \
 This cipher is slightly more secure than the Caesar cipher as there are more possible keys (a, k) but it is still easily broken when the trick is known as there are only 12 possible values for a and 27 possible values for k, giving a total of 324 possible keys.
 
 = Group Properties
