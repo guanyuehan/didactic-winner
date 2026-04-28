@@ -25,10 +25,18 @@
   spacing: 1em // This adds the extra vertical gap between items
 )
 
+// Worksheet helpers (no underlines; just space/boxes)
+#let blankcell(height: 1.4em) = block(height: height)[ ]
 
-= Introduction
+#let smallbox(width: 100%, height: 4.8em) = box(
+  width: width,
+  height: height,
+  stroke: 0.6pt + black,
+  inset: 0.4em,
+)[ ]
 
-TBD
+
+= Basic Ciphers
 
 == Caesar cipher 
 Let the set of letters be $S = {A, B, C, ..., Z}$. 
@@ -39,6 +47,43 @@ For example set k = 2, the word \
 "BRANSON" is $S_2 S_18 S_1 S_19 S_15 S_4$ -> $S_(sigma(2)) S_(sigma(18)) S_(sigma(19)) S_(sigma(15)) S_(sigma(4))$ -> "EUDQVRQ".
 However, this cipher is easily broken when the trick is known as there are only 26 possible keys (k). 
 
+=== Worksheet Example (Caesar)
+*Task:* Encrypt the plaintext *"MEET AT NOON"* using key $k = 7$.
+
+*Letter ↔ number guide (A=1, B=2, ..., Z=26):*
+
+#align(center)[
+  #table(
+    columns: (1.2fr,) + (0.4fr,) * 26,
+    stroke: 0.6pt + black,
+    inset: 3pt,
+    [Letter:], [A], [B], [C], [D], [E], [F], [G], [H], [I], [J], [K], [L], [M],[N], [O], [P], [Q], [R], [S], [T], [U], [V], [W], [X], [Y], [Z],
+    [Digit:], [1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12], [13],[14], [15], [16], [17], [18], [19], [20], [21], [22], [23], [24], [25], [26],
+    [Cipher:], [H], [I], [J], [K], [#blankcell()],[#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()],
+    [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()],[#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()],
+  )
+]
+
+
+*Fill in the table for* *MEET AT NOON*:
+
+#align(center)[
+  #table(
+    columns: (2.6fr,) + (1fr,) * 12,
+    stroke: 0.6pt + black,
+    inset: 4pt,
+    [Plaintext:], [M], [E], [E], [T], [#align(center)[—]], [A], [T], [#align(center)[—]], [N], [O], [O], [N],
+
+    [Digit:], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()],
+    [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()],
+
+    [Ciphertext:], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()],
+    [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()],
+
+  )
+]
+
+
 == Affine Cipher 
 Let the set of letters be $S = {A, B, C, ..., Z}$. 
 This cipher is uses a bijective function $sigma : [1, 26] -> [1, 26] \
@@ -47,6 +92,43 @@ $ for some constants a and k where gcd(a, 27) = 1. (this ensures bijectivity) \
 For example set a = 5 and k = 8, the word \
 "WACKY" is $S_22 S_0 S_2 S_10 S_24$ -> $S_(sigma(22)) S_(sigma(0)) S_(sigma(2)) S_(sigma(10)) S_(sigma(24))$ -> "VGNKB". \
 This cipher is slightly more secure than the Caesar cipher as there are more possible keys (a, k) but it is still easily broken when the trick is known as there are only 12 possible values for a and 27 possible values for k, giving a total of 324 possible keys.
+
+=== Worksheet Example (Affine)
+Use the same parameters as the example above: $a = 5$, $k = 8$.
+
+Fill in the affine mapping table (A=1, ..., Z=26) with $"modulo" 26$:
+
+#align(center)[
+  #table(
+    columns: (1.1fr,) + (.4fr,) * 26,
+    stroke: 0.6pt + black,
+    inset: 3pt,
+    [Letter:], [A], [B], [C], [D], [E], [F], [G], [H], [I], [J], [K], [L], [M],[N], [O], [P], [Q], [R], [S], [T], [U], [V], [W], [X], [Y], [Z],
+    [x:], [1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12], [13],[14], [15], [16], [17], [18], [19], [20], [21], [22], [23], [24], [25], [26],
+    [$5x + 8$:], [13], [18], [23], [2], [7], [#blankcell()], [#blankcell()],
+    [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()],[#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()],
+    [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()],
+    [Result:], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()],
+    [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()],[#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()],
+    [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()],
+  )
+]
+
+
+
+*Now do a word:* Encrypt the plaintext *"MATH"* using the same $a, k$.
+
+#align(center)[
+  #table(
+    columns: (1fr,) * 4,
+    stroke: 0.6pt + black,
+    inset: 4pt,
+    [M], [A], [T], [H],
+    [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()],
+  )
+]
+
+*Ciphertext:* #h(14em)
 
 = Group Properties
 
@@ -74,6 +156,13 @@ It is widely accepted that the DLP is hard to solve.
 Classical algorithms like the Baby-step Giant-step algorithm and Pollard's rho algorithm still take roughly $O(sqrt(p))$ time to solve the DLP. 
 
 = Diffie Hellman//Maybe need change it to canvas example
+#align(center)[
+  #box(
+    stroke: 1pt + black,
+  )[
+    #image("DiffieHellman.png", width: 80%, )
+  ]
+]
 
 Diffle-Hellman(DH) protocol allows two parties(Alice and Bob) to establish a shared secret over an insecure channel. The security of the protocol relies on the difficulty of the discrete logarithm problem(DLP).
 
@@ -140,14 +229,42 @@ More explicitly:
 
 $ (g^a)^b = (g^b )^a " "(mod p) $
 
+== Worksheet Example (Diffie--Hellman)
+*Given:* $p = 29$, $g = 2$, Alice secret $a = 11$, Bob secret $b = 7$.
 
-#align(center)[
-  #box(
-    stroke: 1pt + black,
-  )[
-    #image("DiffieHellman.png", width: 80%, )
-  ]
-]
+Compute each step (leave your final value in the blank):
+
+- Alice public value:
+  $A equiv g^a$ (mod 29)
+
+  $A equiv g^a equiv 2^11 equiv #underline("              ") (mod 29)$
+  
+  So $A = #underline("           " )$.
+
+- Bob public value:
+  $B equiv g^b$ (mod 29)
+
+  $B equiv g^b equiv 2^7 equiv #underline("              ") (mod 29)$
+  
+  So $B = #underline("           " )$.
+
+- Shared secret (Alice):
+  $s equiv B^a$ (mod 29)
+
+  $s equiv B^a equiv #underline("              ") (mod 29)$
+  
+  So $s = #underline("           " )$.
+
+- Shared secret (Bob):
+  $s equiv A^b$ (mod 29)
+
+  $s equiv A^b equiv #underline("              ") (mod 29)$
+  
+  So $s = #underline("           " )$.
+
+Double check Alice's secret is equivlant to Bob's secret key!
+
+
 
 
 
@@ -178,6 +295,25 @@ $ M equiv C^d mod n $
 
 This works because by Euler's theorem $a^phi(n) equiv 1 " "(mod n)$:
 $ C^d equiv (M^e)^d equiv M^(e d) equiv M^(1 + k phi(n)) equiv M mod n $
+
+== Worksheet Example (RSA)
+*Given:* $p = 5$, $q = 11$, $e = 3$, message $M = 12$.
+
+Fill in the blanks:
+
+- $n = p q =$ #h(10em)
+- $phi(n) = (p-1)(q-1) =$ #h(10em)
+- Find $d equiv e^{-1}$ (mod $phi(n)$): $d =$ #h(10em)
+
+- Encrypt:
+  $C equiv M^e equiv 12^3$ (mod $n$) = #h(10em) (mod $n$)
+  
+  So $C =$ #h(8em)
+
+- Decrypt:
+  $M' equiv C^d$ (mod $n$) = #h(12em) (mod $n$)
+  
+  So $M' =$ #h(8em)
 
 == Security
 The current best algorithm to attack RSA is to factor integers. By using General Number Field Sieve, the time complexity is sub-exponential in the size of $n$ or $f(x)=e^((c+o(1))(ln n)^(1/3)(ln ln n)^(2/3)), "where "c = 1.923$. 
