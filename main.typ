@@ -303,15 +303,15 @@ Fill in the blanks:
 
 - $n = p q =$ #h(10em)
 - $phi(n) = (p-1)(q-1) =$ #h(10em)
-- Find $d equiv e^{-1}$ (mod $phi(n)$): $d =$ #h(10em)
+- Find $d equiv e^(-1)$ : $d =$ #h(5em) (mod $phi(n)$)
 
 - Encrypt:
-  $C equiv M^e equiv 12^3$ (mod $n$) = #h(10em) (mod $n$)
+  $C equiv M^e equiv 12^3$ = #h(5em) (mod $n$)
   
   So $C =$ #h(8em)
 
 - Decrypt:
-  $M' equiv C^d$ (mod $n$) = #h(12em) (mod $n$)
+  $M' equiv C^d$ (mod $n$) = #h(5em) (mod $n$)
   
   So $M' =$ #h(8em)
 
