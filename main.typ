@@ -359,9 +359,8 @@ However, with Shor's algorithm, the time complexity is polynomial in the size of
 
 == Wiener's attack
 
-#let theorem = thmbox("Euler", "Theorem", fill: rgb("#ffffff"))
+#let theorem = thmbox("Wiener", "Theorem", fill: rgb("#ffffff"))
 
-#outline()
 
 #theorem("Wiener")[
 Given a public key $(e, n)$ where $n = p q$, if 
