@@ -17,6 +17,7 @@
   abstract: "Mathematical Cryptography",
 )
 
+
 //Setting for formating
 #set heading(numbering: "1.")
 #set enum(
@@ -143,6 +144,37 @@ An important example in cryptography is the set of permutations of a finite set.
 
 These permutations can be composed and inverted, meaning that encryption and decryption operations form a group under composition. This algebraic structure helps explain why certain ciphers are easy or difficult to break.
 
+= Extended Euclidean Algorithm (and the Euclidean Algorithm)
+The Euclidean Algorithm is used to find the greatest common divisor of two numbers.
+Notice that the greatest common divisor of two numbers is one when the numbers do not share any common factors other than one (hence are *coprime*). 
+This goes both ways, hence we say that two numbers are *coprime* if and only if their greatest common divisor is one. \
+
+First notice that $gcd(a, b)$ is the greatest common divisor of $a$ and $b$.  
+Let
+
+$
+g = gcd(a, b)
+$
+
+Then we can write $a = g a'$ and $b = g b'$ for some integers $a'$ and $b'$.  
+If $g | a$ and $g | b$, then $g | a - k b$ for any integer $k$.  
+In other words,
+
+$
+gcd(a, b) = gcd(a, b mod a)
+$
+
+when $b mod a$ is taken to be the remainder when $b$ is divided by $a$.  
+
+The algorithm will eventually terminate when it reaches $gcd(a_k, 0)$.  
+In this case, $g = a_k$. \
+
+It can be shown that it takes at most $2 log(a) + 1$ steps to terminate, and the average number of steps is approximately
+
+$
+(12 ln(2)) / (pi^2) ln(a).
+$
+
 
 = Discrete Logarithm Problem(DLP)
 The DLP is the problem of finding an integer $k$ such that $g^k equiv h " "(mod p)$, given $g$, $h$, and a prime $p$.
@@ -164,6 +196,8 @@ Classical algorithms like the Baby-step Giant-step algorithm and Pollard's rho a
   ]
 ]
 
+
+
 Diffle-Hellman(DH) protocol allows two parties(Alice and Bob) to establish a shared secret over an insecure channel. The security of the protocol relies on the difficulty of the discrete logarithm problem(DLP).
 
 Secret values are *bolded* for better visualisation.
@@ -172,6 +206,7 @@ Secret values are *bolded* for better visualisation.
 
 - Prime modulus: $p = 23$
 - Generator: $g = 5$
+This generator has to generate a large subgroup of the multiplicative group of integers modulo $p$ to ensure security. In this case, 5 is a primitive root modulo 23, meaning it generates the entire group of nonzero elements modulo 23.
 
 == Alice
 //Idk if possible but make eqn at centre, mod p towards the side of centre idk how
@@ -324,8 +359,9 @@ However, with Shor's algorithm, the time complexity is polynomial in the size of
 
 == Wiener's attack
 
-RSA system is very fragile when the key generation and encryption process is not done properly. We will be mainly focusing on Wiener's attack, which is a method of breaking RSA when the private exponent $d$ is small. (Look up RsaCTFTool for all kinds of RSA attacks).
-#let theorem = thmbox("Euler", "Theorem", fill: rgb("#eeffee"))
+#let theorem = thmbox("Euler", "Theorem", fill: rgb("#ffffff"))
+
+#outline()
 
 #theorem("Wiener")[
 Given a public key $(e, n)$ where $n = p q$, if 
@@ -532,22 +568,4 @@ Factoring out $a$ from the product on the left:
 $ a^(phi(n)) (r_1 r_2 dots r_(phi(n))) equiv (r_1 r_2 dots r_(phi(n))) mod n $
 
 Let $P = product_(i=1)^(phi(n)) r_i$. Since each $r_i$ is coprime to $n$, their product $P$ is also coprime to $n$. This means $P$ has a multiplicative inverse modulo $n$. Multiplying both sides by $P^(-1)$ yields:
-$ a^(phi(n)) equiv 1 mod n $
-
-
-
-= Euclidean Algorithm
-This algorithm is used to find the greatest common divisor of two numbers.
-Notice that the greatest common divisor of two numbers is one when the numbers do not share any common factors other than one (hence are *coprime*). 
-This goes both ways, hence we say that two numbers are *coprime* if and only if their greatest common divisor is one. \
-First notice 
-$ gcd(a, b)$ is the greatest common divisor of $a$ and $b$.
-let $g = gcd(a, b)$ \
-Then we can write $a = g a'$ and $b = g b'$ for some integers $a'$ and $b'$. \
-if $g | a " and " g | b, " then " g | a - k b "for some integer k"$ 
-In other words, \ 
-$
-gcd(a, b) = gcd(a, b (mod a))
-$
-When we take $b (mod a)$ to be the remainder of $b$ when divided by $a$, the algorithm will eventually terminate when it reached $gcd(a_k, 0)$ 
-In this case, $g = a_k$ 
+$ a^(phi(n)) equiv 1 mod n $ 
