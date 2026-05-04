@@ -13,9 +13,7 @@
     (
       name: "Zhang Hengwei 25J17",
     ),
-    (
-      name: ""
-    )
+
   ),
   abstract: "Mathematical Cryptography",
 )
