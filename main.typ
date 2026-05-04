@@ -145,9 +145,11 @@ An important example in cryptography is the set of permutations of a finite set.
 These permutations can be composed and inverted, meaning that encryption and decryption operations form a group under composition. This algebraic structure helps explain why certain ciphers are easy or difficult to break.
 
 == Cyclic group and generators
-A group $G$ is called cyclic if there exists an element $g in G$ such that every element of $G$ can be expressed as a power of $g$. In other words, $G = {g^k | k in ZZ}$. The element $g$ is called a generator of the group. 
+A group $G$ is called cyclic if there exists an element $g in G$ such that every element of $G$ can be expressed as a power of $g$. In other words, $G = {g^k | k in ZZ}$. The element $g$ is called a generator of the group. \
+#align(center, [
 $G = {g^1, g^2, g^3, ..., g^n}$
-In the group $ZZ\/p ZZ$, there are exactly $phi(p-1)$ generators, where $phi$ is the Euler totient function.
+ ]) \ 
+In the group $ZZ\/p ZZ$, there are exactly *$phi(p-1)$ generators*, where $phi$ is the Euler totient function. \ 
 We say that $ZZ\/p ZZ$ is a cyclic group because it can be "generated" by a single element.
 
 = Extended Euclidean Algorithm (and the Euclidean Algorithm)
@@ -167,28 +169,25 @@ If $g | a$ and $g | b$, then $g | a - k b$ for any integer $k$.
 In other words,
 
 $
-gcd(a, b) = gcd(a, b mod a)
+gcd(a, b) &= gcd(b mod a, a)
+\ &= gcd(b_0, a)
+\ &= gcd(a mod b_0, b_0)
+\ &= gcd(a_0, b_0)
+\ &= ...
 $
 
 when $b mod a$ is taken to be the remainder when $b$ is divided by $a$.  
 
-The algorithm will eventually terminate when it reaches $gcd(a_k, 0)$.  
-In this case, $g = a_k$. \
-
-It can be shown that it takes at most $2 log(a) + 1$ steps to terminate, and the average number of steps is approximately
-
-$
-(12 ln(2)) / (pi^2) ln(a).
-$
+The algorithm will eventually terminate when it reaches $b_k = 0$ or $a_k = 0$ for some integer $k$. In which case, $g = a_k$ or $g = b_k$ respectively. \
 
 First we illustrate the extended Euclidean Algorithm and the original Euclidean Algorithm.
 set a = 73, b = 25.
 #align(center, [
 	$
 	73 = 25 times 2 + 23 \
-	25 = 23 times 1 + 2 = (73 - 25 times 2) times 1 + 2\
-	23 = 2 times 11 + 1 = (25 - 23 times 1) times 11 + 1 \
-	2 = 1 times 2 + 0  = (23 - 2 times 11) times 2 + 0\
+	25 = 23 times 1 + 2 \
+	23 = 2 times 11 + 1 \
+	2 = 1 times 2 + 0 
 	$
 ]) 
 Thus, the greatest common divisor of $73$ and $25$ is $1$. 
@@ -200,6 +199,13 @@ $
 					\ &= a - b times 2 - (b - (a - b times 2) times 1) times 11
 $
 The gcd is just a linear combination of $a$ and $b$. 
+
+
+It can be shown that it takes at most $2 log(a) + 1$ steps to terminate, and the average number of steps is approximately
+
+$
+(12 ln(2)) / (pi^2) ln(a).
+$
 
 = Discrete Logarithm Problem(DLP)
 The DLP is the problem of finding an integer $k$ such that $g^k equiv h " "(mod p)$, given $g$, $h$, and a prime $p$.
