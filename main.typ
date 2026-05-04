@@ -397,12 +397,12 @@ However, with Shor's algorithm, the time complexity is polynomial in the size of
 #let theorem = thmbox("Wiener", "Theorem", fill: rgb("#ffffff"))
 
 
-#block(
-  width: 100%,
-  stroke: 0.6pt + black,
-  inset: 0.6em,
-)[
-  #theorem("Wiener")[
+#theorem("Wiener")[
+  #block(
+    width: 100%,
+    stroke: 0.6pt + black,
+    inset: 0.6em,
+  )[
     Given a public key $(e, n)$ where $n = p q$, if 
     $ d < 1/3 n^(1/4) $
     along with Legendre theorem on continued fractions, where $abs(x-a/b)<1/(2b^2)$, then $a/b$ is one of the convergents fraction of $x-a/b$. Then $d$ can be found using continued fractions quickly.
@@ -476,15 +476,16 @@ which satisfy the condition since $e/n$ is known.
 
 #let theorem = thmbox("Affine", "Theorem", fill: rgb("#ffffff"))
 
-#block(
-  width: 100%,
-  stroke: 0.6pt + black,
-  inset: 0.6em,
-)[
-  #theorem("Affine")[
+#theorem("Affine")[
+
+  #block(
+    width: 100%,
+    stroke: 0.6pt + black,
+    inset: 0.6em,
+  )[
     Let $E(x) = a x + b " "(mod n)$ be the substitution function for the affine cipher, where $n$ is prime so that for all $a$, $gcd(a, n) = 1$. Then, E is a bijection from the set of integers modulo $n$ to itself.
-  ] <Affine>
-]
+  ]
+] <Affine>
 
 *Proof:*
 
@@ -507,20 +508,20 @@ This also proves caesar cipher is a bijection as it is a special case of affine 
 We can proof via more generalised Euler's theorem $a^phi(n) equiv 1 " "(mod n)$ or formal proof of FLT using bionmial distrubution. We will choose the latter, which is more intuitive and easier to understand. (To proof Euler's theorem, it's further down in the appendix)
 #let theorem = thmbox("FLT", "Theorem", fill: rgb("#ffffff"))
 
-#block(
-  width: 100%,
-  stroke: 0.6pt + black,
-  inset: 0.6em,
-)[
-  #theorem("FLT")[
+#theorem("FLT")[
+  #block(
+    width: 100%,
+    stroke: 0.6pt + black,
+    inset: 0.6em,
+  )[
     If $p$ is a prime and $a$ is an integer not divisible by $p$, then 
 
     $ a^(p-1) equiv 1 " "(mod p) $
     Or similiarly:
 
     $ a^(p) equiv a " "(mod p) $
-  ] <FLT>
-]
+  ]
+] <FLT>
 
 *Proof: * 
 
@@ -594,17 +595,17 @@ By the principle of mathematical induction, we have proved Fermat's Little Theor
 = Euler's Theorem
 #let theorem = thmbox("Euler", "Theorem", fill: rgb("#ffffff"))
 
-#block(
-  width: 100%,
-  stroke: 0.6pt + black,
-  inset: 0.6em,
-)[
-  #theorem("Euler")[
+#theorem("Euler")[
+  #block(
+    width: 100%,
+    stroke: 0.6pt + black,
+    inset: 0.6em,
+  )[
     If $a, n in ZZ$ such that $gcd(a, n) = 1$. Then:
 
     $ a^(phi(n)) equiv 1 " "(mod n) $
-  ] <Euler>
-]
+  ]
+] <Euler>
 
 *Proof:*
 Consider the set of integers $S = {r_1, r_2, dots, r_(phi(n))}$ which represent the reduced residue system modulo $n$. These are the integers in the range $[1, n]$ that are coprime to $n$.
