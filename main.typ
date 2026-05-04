@@ -449,9 +449,6 @@ Therefore,
 $ abs(e/n - k/(G d))< 1/(2d^2) $
 which satisfy the condition since $e/n$ is known.
 
-== lattice attacks
-TBD
-
 #counter(heading).update(0)
 #set page(paper: "a4")
 
