@@ -144,6 +144,12 @@ An important example in cryptography is the set of permutations of a finite set.
 
 These permutations can be composed and inverted, meaning that encryption and decryption operations form a group under composition. This algebraic structure helps explain why certain ciphers are easy or difficult to break.
 
+== Cyclic group and generators
+A group $G$ is called cyclic if there exists an element $g in G$ such that every element of $G$ can be expressed as a power of $g$. In other words, $G = {g^k | k in ZZ}$. The element $g$ is called a generator of the group. 
+$G = {g^1, g^2, g^3, ..., g^n}$
+In the group $ZZ\/p ZZ$, there are exactly $phi(p-1)$ generators, where $phi$ is the Euler totient function.
+We say that $ZZ\/p ZZ$ is a cyclic group because it can be "generated" by a single element.
+
 = Extended Euclidean Algorithm (and the Euclidean Algorithm)
 The Euclidean Algorithm is used to find the greatest common divisor of two numbers.
 Notice that the greatest common divisor of two numbers is one when the numbers do not share any common factors other than one (hence are *coprime*). 
@@ -175,6 +181,25 @@ $
 (12 ln(2)) / (pi^2) ln(a).
 $
 
+First we illustrate the extended Euclidean Algorithm and the original Euclidean Algorithm.
+set a = 73, b = 25.
+#align(center, [
+	$
+	73 = 25 times 2 + 23 \
+	25 = 23 times 1 + 2 = (73 - 25 times 2) times 1 + 2\
+	23 = 2 times 11 + 1 = (25 - 23 times 1) times 11 + 1 \
+	2 = 1 times 2 + 0  = (23 - 2 times 11) times 2 + 0\
+	$
+]) 
+Thus, the greatest common divisor of $73$ and $25$ is $1$. 
+Notice how each step can be represented as a linear combination of the previous step. 
+$
+  23 &= a - b times 2 &&(1)\ 
+  2 &= b - 23 times 1 &&(2)\ &= b - (a - b times 2) times 1 \
+  1 &= 23 - 2 times 11 &&(3)\ &= 23 - (b - (a - b times 2) times 1) times 11 
+					\ &= a - b times 2 - (b - (a - b times 2) times 1) times 11
+$
+The gcd is just a linear combination of $a$ and $b$. 
 
 = Discrete Logarithm Problem(DLP)
 The DLP is the problem of finding an integer $k$ such that $g^k equiv h " "(mod p)$, given $g$, $h$, and a prime $p$.
