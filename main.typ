@@ -13,6 +13,9 @@
     (
       name: "Zhang Hengwei 25J17",
     ),
+    (
+      name: ""
+    )
   ),
   abstract: "Mathematical Cryptography",
 )
@@ -48,7 +51,7 @@ For example set k = 2, the word \
 "BRANSON" is $S_2 S_18 S_1 S_19 S_15 S_4$ -> $S_(sigma(2)) S_(sigma(18)) S_(sigma(19)) S_(sigma(15)) S_(sigma(4))$ -> "EUDQVRQ".
 However, this cipher is easily broken when the trick is known as there are only 26 possible keys (k). 
 
-=== Worksheet Example (Caesar)
+== Worksheet Example (Caesar)
 *Task:* Encrypt the plaintext *"MEET AT NOON"* using key $k = 7$.
 
 *Letter ↔ number guide (A=1, B=2, ..., Z=26):*
@@ -93,8 +96,9 @@ $ for some constants a and k where gcd(a, 27) = 1. (this ensures bijectivity) \
 For example set a = 5 and k = 8, the word \
 "WACKY" is $S_22 S_0 S_2 S_10 S_24$ -> $S_(sigma(22)) S_(sigma(0)) S_(sigma(2)) S_(sigma(10)) S_(sigma(24))$ -> "VGNKB". \
 This cipher is slightly more secure than the Caesar cipher as there are more possible keys (a, k) but it is still easily broken when the trick is known as there are only 12 possible values for a and 27 possible values for k, giving a total of 324 possible keys.
+#set page(paper: "a4")
 
-=== Worksheet Example (Affine)
+== Worksheet Example (Affine)
 Use the same parameters as the example above: $a = 5$, $k = 8$.
 
 Fill in the affine mapping table (A=1, ..., Z=26) with $"modulo" 26$:
@@ -129,7 +133,7 @@ Fill in the affine mapping table (A=1, ..., Z=26) with $"modulo" 26$:
   )
 ]
 
-*Ciphertext:* #h(14em)
+*Ciphertext:* #h(18em)
 
 = Group Properties
 
@@ -138,7 +142,7 @@ A *group* is a set $G$ together with a binary operation $*$ such that:
 1. (*Closure*) For all $a, b in G$, the result $a * b in G$.
 2. (*Associativity*) For all $a, b, c in G$, $(a * b) * c = a * (b * c)$.
 3. (*Identity element*) There exists an element $e in G$ such that $a * e = e * a = a$ for all $a in G$.
-4. (*Inverse element*) For every $a in G$, there exists an element $a^{-1} in G$ such that $a * a^{-1} = a^{-1} * a = e$.
+4. (*Inverse element*) For every $a in G$, there exists an element $a^(-1) in G$ such that $a * a^(-1) = a^(-1)  * a = e$.
 
 An important example in cryptography is the set of permutations of a finite set. The set of all permutations on $n$ elements forms a group under composition, called the symmetric group $S_n$.
 
@@ -294,6 +298,7 @@ $ A^bold(b) equiv B^bold(a) " "(mod p) $
 More explicitly:
 
 $ (g^a)^b = (g^b )^a " "(mod p) $
+#set page(paper: "a4")
 
 == Worksheet Example (Diffie--Hellman)
 *Given:* $p = 29$, $g = 2$, Alice secret $a = 11$, Bob secret $b = 7$.
@@ -382,9 +387,8 @@ Fill in the blanks:
   So $M' =$ #h(8em)
 
 == Security
-The current best algorithm to attack RSA is to factor integers. By using General Number Field Sieve, the time complexity is sub-exponential in the size of $n$ or $f(x)=e^((c+o(1))(ln n)^(1/3)(ln ln n)^(2/3)), "where "c = 1.923$. 
+The current best algorithm to attack RSA is to factor integers. By using General Number Field Sieve, the time complexity is sub-exponential in the size of $n$ or $f(x)=e^((c+o(1))(ln n)^(1/3)(ln ln n)^(2/3)), "where "c = 1.923$. Sub-exponential is faster than polynomial time for large x in big O notation.
 
-Taking $o(1) = 20$ When $n = 2^256 $, $f(n) approx n^2.08$. At $n=2^2048, f(n) approx n^0.651$, roughly $10^375$ computational years. 
 
 However, with Shor's algorithm, the time complexity is polynomial in the size of $n$, at roughly $O((log n)^3)$. With 100k qubits, it is estimated that RSA-2048 can be broken in a few hours. 
 
@@ -393,12 +397,19 @@ However, with Shor's algorithm, the time complexity is polynomial in the size of
 #let theorem = thmbox("Wiener", "Theorem", fill: rgb("#ffffff"))
 
 
-#theorem("Wiener")[
-Given a public key $(e, n)$ where $n = p q$, if 
-$ d < 1/3 n^(1/4) $
-along with Legendre theorem on continued fractions, where $abs(x-a/b)<1/(2b^2)$, then $a/b$ is one of the convergents fraction of $x-a/b$. Then $d$ can be found using continued fractions quickly.
+#block(
+  width: 100%,
+  stroke: 0.6pt + black,
+  inset: 0.6em,
+)[
+  #theorem("Wiener")[
+    Given a public key $(e, n)$ where $n = p q$, if 
+    $ d < 1/3 n^(1/4) $
+    along with Legendre theorem on continued fractions, where $abs(x-a/b)<1/(2b^2)$, then $a/b$ is one of the convergents fraction of $x-a/b$. Then $d$ can be found using continued fractions quickly.
+  ]
 ]
 //End therom
+#set page(paper: "a4")
 
 *Proof:*
 
@@ -433,7 +444,8 @@ Remember, our goal is to make an expression of $abs(x-a/b) < 1/(2b^2)$ with know
 
 $ abs(e/n - k/(G d)) = abs((e d G -k N)/(N G d) ) $
 
-Since  $k phi(n) = G (k lambda(n)) = e d G$:
+#set page(paper: "a4")
+Since  $k phi(n) = G (k lambda(n)) = e d G$ and starting from previous page:
 $ 
   abs((e d G - k N) / (N G d)) &= abs((e d G - k phi(n) - k N + k phi(n)) / (N G d)) \
   &= abs((1 - k(N - phi(n))) / (N G d))  \
@@ -462,12 +474,17 @@ which satisfy the condition since $e/n$ is known.
 
 == Bijection Proof for Caesar or Affine Cipher
 
-#let theorem = thmbox("Affine", "Theorem", fill: rgb("#eeffee"))
+#let theorem = thmbox("Affine", "Theorem", fill: rgb("#ffffff"))
 
-#theorem("Affine")[
-
-Let $E(x) = a x + b " "(mod n)$ be the substitution function for the affine cipher, where $n$ is prime so that for all $a$, $gcd(a, n) = 1$. Then, E is a bijection from the set of integers modulo $n$ to itself.
-] <Affine>
+#block(
+  width: 100%,
+  stroke: 0.6pt + black,
+  inset: 0.6em,
+)[
+  #theorem("Affine")[
+    Let $E(x) = a x + b " "(mod n)$ be the substitution function for the affine cipher, where $n$ is prime so that for all $a$, $gcd(a, n) = 1$. Then, E is a bijection from the set of integers modulo $n$ to itself.
+  ] <Affine>
+]
 
 *Proof:*
 
@@ -488,16 +505,22 @@ This also proves caesar cipher is a bijection as it is a special case of affine 
 = Proof of Fermat's Little Theorem(FLT)
 
 We can proof via more generalised Euler's theorem $a^phi(n) equiv 1 " "(mod n)$ or formal proof of FLT using bionmial distrubution. We will choose the latter, which is more intuitive and easier to understand. (To proof Euler's theorem, it's further down in the appendix)
-#let theorem = thmbox("FLT", "Theorem", fill: rgb("#eeffee"))
+#let theorem = thmbox("FLT", "Theorem", fill: rgb("#ffffff"))
 
-#theorem("FLT")[
-If $p$ is a prime and $a$ is an integer not divisible by $p$, then 
+#block(
+  width: 100%,
+  stroke: 0.6pt + black,
+  inset: 0.6em,
+)[
+  #theorem("FLT")[
+    If $p$ is a prime and $a$ is an integer not divisible by $p$, then 
 
-$ a^(p-1) equiv 1 " "(mod p) $
-Or similiarly:
+    $ a^(p-1) equiv 1 " "(mod p) $
+    Or similiarly:
 
-$ a^(p) equiv a " "(mod p) $
-] <FLT>
+    $ a^(p) equiv a " "(mod p) $
+  ] <FLT>
+]
 
 *Proof: * 
 
@@ -569,15 +592,19 @@ $
 By the principle of mathematical induction, we have proved Fermat's Little Theorem.
 
 = Euler's Theorem
-#let theorem = thmbox("Euler", "Theorem", fill: rgb("#eeffee"))
+#let theorem = thmbox("Euler", "Theorem", fill: rgb("#ffffff"))
 
-#theorem("Euler")[
-If $a, n in ZZ$ such that $gcd(a, n) = 1$. Then:
+#block(
+  width: 100%,
+  stroke: 0.6pt + black,
+  inset: 0.6em,
+)[
+  #theorem("Euler")[
+    If $a, n in ZZ$ such that $gcd(a, n) = 1$. Then:
 
-$ a^(phi(n)) equiv 1 " "(mod n) $
-
-
-] <Euler>
+    $ a^(phi(n)) equiv 1 " "(mod n) $
+  ] <Euler>
+]
 
 *Proof:*
 Consider the set of integers $S = {r_1, r_2, dots, r_(phi(n))}$ which represent the reduced residue system modulo $n$. These are the integers in the range $[1, n]$ that are coprime to $n$.
