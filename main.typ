@@ -41,25 +41,25 @@
 
 == Caesar cipher 
 Let the set of letters be $S = {A, B, C, ..., Z}$. 
-This cipher is uses a bijective function $sigma : [1, 26] -> [1, 26] \
-c |-> c + k (mod 27)
+This cipher uses a bijective function $sigma : [0, 25] -> [0, 25] \
+c |-> c + k (mod 26) 
 $ for some constant key k\
-For example set k = 2, the word \
-"BRANSON" is $S_2 S_18 S_1 S_19 S_15 S_4$ -> $S_(sigma(2)) S_(sigma(18)) S_(sigma(19)) S_(sigma(15)) S_(sigma(4))$ -> "EUDQVRQ".
+For example, set k = 2, the word \
+"BRANSON" is $S_1 S_17 S_0 S_18 S_14 S_3$ -> $S_(sigma(1)) S_(sigma(17)) S_(sigma(0)) S_(sigma(18)) S_(sigma(14)) S_(sigma(3))$ -> "EUDQVRQ".
 However, this cipher is easily broken when the trick is known as there are only 26 possible keys (k). 
 
 === Worksheet Example (Caesar)
 *Task:* Encrypt the plaintext *"MEET AT NOON"* using key $k = 7$.
 
-*Letter ↔ number guide (A=1, B=2, ..., Z=26):*
+*Letter ↔ number guide (A=0, B=1, ..., Z=25):*
 
 #align(center)[
   #table(
-    columns: (1.2fr,) + (0.4fr,) * 26,
+    columns: (1.2fr,) + (0.4fr,) * 25,
     stroke: 0.6pt + black,
     inset: 3pt,
     [Letter:], [A], [B], [C], [D], [E], [F], [G], [H], [I], [J], [K], [L], [M],[N], [O], [P], [Q], [R], [S], [T], [U], [V], [W], [X], [Y], [Z],
-    [Digit:], [1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12], [13],[14], [15], [16], [17], [18], [19], [20], [21], [22], [23], [24], [25], [26],
+    [Digit:], [0], [1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [1], [12], [13],[14], [15], [16], [17], [18], [19], [20], [21], [22], [23], [24], [25],
     [Cipher:], [H], [I], [J], [K], [#blankcell()],[#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()],
     [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()],[#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()],
   )
@@ -87,9 +87,9 @@ However, this cipher is easily broken when the trick is known as there are only 
 
 == Affine Cipher 
 Let the set of letters be $S = {A, B, C, ..., Z}$. 
-This cipher is uses a bijective function $sigma : [1, 26] -> [1, 26] \
-c |-> a c + k (mod 27)
-$ for some constants a and k where gcd(a, 27) = 1. (this ensures bijectivity) \ 
+This cipher uses a bijective function $sigma : [0, 25] -> [0, 25] \
+c |-> a c + k (mod 26) 
+$ for some constants a and k where gcd(a, 26) = 1. (this ensures bijectivity) \ 
 For example set a = 5 and k = 8, the word \
 "WACKY" is $S_22 S_0 S_2 S_10 S_24$ -> $S_(sigma(22)) S_(sigma(0)) S_(sigma(2)) S_(sigma(10)) S_(sigma(24))$ -> "VGNKB". \
 This cipher is slightly more secure than the Caesar cipher as there are more possible keys (a, k) but it is still easily broken when the trick is known as there are only 12 possible values for a and 27 possible values for k, giving a total of 324 possible keys.
@@ -97,7 +97,7 @@ This cipher is slightly more secure than the Caesar cipher as there are more pos
 === Worksheet Example (Affine)
 Use the same parameters as the example above: $a = 5$, $k = 8$.
 
-Fill in the affine mapping table (A=1, ..., Z=26) with $"modulo" 26$:
+Fill in the affine mapping table (A=0, ..., Z=25) with $"modulo" 26$:
 
 #align(center)[
   #table(
@@ -105,8 +105,8 @@ Fill in the affine mapping table (A=1, ..., Z=26) with $"modulo" 26$:
     stroke: 0.6pt + black,
     inset: 3pt,
     [Letter:], [A], [B], [C], [D], [E], [F], [G], [H], [I], [J], [K], [L], [M],[N], [O], [P], [Q], [R], [S], [T], [U], [V], [W], [X], [Y], [Z],
-    [x:], [1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12], [13],[14], [15], [16], [17], [18], [19], [20], [21], [22], [23], [24], [25], [26],
-    [$5x + 8$:], [13], [18], [23], [2], [7], [#blankcell()], [#blankcell()],
+    [x:], [0], [1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [1], [12], [13],[14], [15], [16], [17], [18], [19], [20], [21], [22], [23], [24], [25],
+    [$5x + 8$:], [8], [13], [18], [23], [2], [7], [#blankcell()], [#blankcell()],
     [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()],[#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()],
     [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()],
     [Result:], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()],
@@ -155,7 +155,7 @@ We say that $ZZ\/p ZZ$ is a cyclic group because it can be "generated" by a sing
 = Extended Euclidean Algorithm (and the Euclidean Algorithm)
 The Euclidean Algorithm is used to find the greatest common divisor of two numbers.
 Notice that the greatest common divisor of two numbers is one when the numbers do not share any common factors other than one (hence are *coprime*). 
-This goes both ways, hence we say that two numbers are *coprime* if and only if their greatest common divisor is one. \
+The converse is also true, hence we say that two numbers are *coprime* if and only if their greatest common divisor is one. \
 
 First notice that $gcd(a, b)$ is the greatest common divisor of $a$ and $b$.  
 Let
@@ -178,9 +178,9 @@ $
 
 when $b mod a$ is taken to be the remainder when $b$ is divided by $a$.  
 
-The algorithm will eventually terminate when it reaches $b_k = 0$ or $a_k = 0$ for some integer $k$. In which case, $g = a_k$ or $g = b_k$ respectively. \
+The algorithm will eventually terminate when it reaches $b_k = 0$ or $a_k = 0$ for some integer $k$, in which case, $g = a_k$ or $g = b_k$ respectively. \
 
-First we illustrate the extended Euclidean Algorithm and the original Euclidean Algorithm.
+First we illustrate the Extended Euclidean Algorithm and the original Euclidean Algorithm.
 set a = 73, b = 25.
 #align(center, [
 	$
@@ -214,11 +214,11 @@ $
 g^k equiv h " "(mod p) \ 
 g^(k + m(p-1)) equiv g^k g^(m(p-1)) equiv g^k equiv h " "(mod p)
 $
-Thus, the Discrete Logarithm Problem is only defined module $p-1$. 
+Thus, the Discrete Logarithm Problem is only defined modulo p - 1. 
 It is widely accepted that the DLP is hard to solve.
 Classical algorithms like the Baby-step Giant-step algorithm and Pollard's rho algorithm still take roughly $O(sqrt(p))$ time to solve the DLP. 
 
-= Diffie Hellman//Maybe need change it to canvas example
+= Diffie-Hellman//Maybe need change it to canvas example
 #align(center)[
   #box(
     stroke: 1pt + black,
@@ -229,7 +229,7 @@ Classical algorithms like the Baby-step Giant-step algorithm and Pollard's rho a
 
 
 
-Diffle-Hellman(DH) protocol allows two parties(Alice and Bob) to establish a shared secret over an insecure channel. The security of the protocol relies on the difficulty of the discrete logarithm problem(DLP).
+Diffle-Hellman(DH) protocol allows two parties (Alice and Bob) to establish a shared secret over an insecure channel. The security of the protocol relies on the difficulty of the discrete logarithm problem (DLP).
 
 Secret values are *bolded* for better visualisation.
 
@@ -279,7 +279,7 @@ $ bold(s) equiv 4^3 equiv bold(18) " "(mod 23) $
 Both obtain the same shared secret:
 *$ s = 18 $*
 
-It can be showed that the shared secret equivilant as:
+It can be shown that the shared secret equivalant as:
 $ A equiv g^bold(a) " "(mod p) $
 $ B equiv g^bold(b) " "(mod p) $
 
@@ -328,7 +328,7 @@ Compute each step (leave your final value in the blank):
   
   So $s = #underline("           " )$.
 
-Double check Alice's secret is equivlant to Bob's secret key!
+Double-check that Alice's secret is equivalent to Bob's secret key!
 
 
 
@@ -341,7 +341,7 @@ RSA(Rivest-Shamir-Adleman) is a widely used public-key cryptosystem that relies 
 
 == Key Generation
 
-A user generates an RSA keys as follows:
+A user generates an RSA keys pair as follows:
 
 1. Choose two distinct large prime numbers $p$ and $q$. (This are kept secret)
 2. Compute $n = p * q$. (This is part of the public key)
@@ -349,7 +349,7 @@ A user generates an RSA keys as follows:
 4. Choose an integer $e$ such that $1 < e < phi(n)$ and $gcd(e, phi(n)) = 1$. The integer $e$ is the public exponent and is part of the public key. A common choice for $e$ is 65537 = 2^16 + 1 to prevent small private exponents attack.
 5. Compute private exponent $d$ such that $d equiv e^(-1) mod phi(n)$, $d$ is the private exponent and should be kept secret.
 
-To summerise, $(n, e)$ is the public values and $(p, q, d)$ is the private values.
+To summarize, $(n, e)$ is the public keys and $(p, q, d)$ is the private keys.
 
 == Encryption
 To encrypt a message $M$ (where $0 <= M < n$), the sender computes the ciphertext $C$ using the recipient's public key $(n, e)$ as follows:
@@ -382,9 +382,9 @@ Fill in the blanks:
   So $M' =$ #h(8em)
 
 == Security
-The current best algorithm to attack RSA is to factor integers. By using General Number Field Sieve, the time complexity is sub-exponential in the size of $n$ or $f(x)=e^((c+o(1))(ln n)^(1/3)(ln ln n)^(2/3)), "where "c = 1.923$. 
+The current best algorithm to attack RSA is to factor integers. Using the General Number Field Sieve, the time complexity is sub-exponential in the size of $n$ or $f(x)=e^((c+o(1))(ln n)^(1/3)(ln ln n)^(2/3)), "where "c = 1.923$. 
 
-Taking $o(1) = 20$ When $n = 2^256 $, $f(n) approx n^2.08$. At $n=2^2048, f(n) approx n^0.651$, roughly $10^375$ computational years. 
+Taking $o(1) = 20$ When $n = 2^256 $, $f(n) approx n^2.08$. At $n=2^2048, f(n) approx n^0.651$, roughly $10^375$ years of computation. 
 
 However, with Shor's algorithm, the time complexity is polynomial in the size of $n$, at roughly $O((log n)^3)$. With 100k qubits, it is estimated that RSA-2048 can be broken in a few hours. 
 
@@ -396,13 +396,13 @@ However, with Shor's algorithm, the time complexity is polynomial in the size of
 #theorem("Wiener")[
 Given a public key $(e, n)$ where $n = p q$, if 
 $ d < 1/3 n^(1/4) $
-along with Legendre theorem on continued fractions, where $abs(x-a/b)<1/(2b^2)$, then $a/b$ is one of the convergents fraction of $x-a/b$. Then $d$ can be found using continued fractions quickly.
+along with Legendre's theorem on continued fractions, where $abs(x-a/b)<1/(2b^2)$, then $a/b$ is one of the convergents fraction of $x-a/b$. Then $d$ can be found using continued fractions quickly.
 ]
 //End therom
 
 *Proof:*
 
-Wiener's attack relies on the fact that if $d$ is small, then the fraction $e/n$ can be approximated by a rational number with a small denominator, which corresponds to the private exponent $d$. This proof is challenging to follow, do ask questions if needed.
+Wiener's attack relies on the fact that if $d$ is small, then the fraction $e/n$ can be approximated by a rational number with a small denominator, which corresponds to the private exponent $d$. This proof is challenging to follow, so do ask questions if needed.
 
 === Definition
 To start off, let $G = gcd(p, q)$ and let the Carmichael function be $lambda(n) = phi(n)/gcd(p, q) = lcm(p,q)$, then
@@ -414,7 +414,7 @@ $ e d = 1 + k lambda(n) $
 
 *Proof*: Assuming standard RSA encryptions, $p < q < 2q$. Using $N=p q$ and $p < sqrt(n)$, we have $q < 2p = 2sqrt(n)$ and thus $p + q - 1 < sqrt(n) + 2sqrt(n) - 1 = 2sqrt(n) - 1 < 3sqrt(n)$. 
 
-Since $phi(n) = (p-1)(q-1)= p q -p -q+1$, $N-phi(N) = p-q+1<3sqrt(n)$
+Since $phi(n) = (p-1)(q-1)= p q -p -q+1$, $N-phi(N) = N - phi(N) = p + q - 1<3sqrt(n)$
 
 *Lemma 2:* $k < d$
 
@@ -471,7 +471,7 @@ Let $E(x) = a x + b " "(mod n)$ be the substitution function for the affine ciph
 
 *Proof:*
 
-Let $i, j in {1, 2, dots, n-1}$ be distinct intgers, i.e. $i != j$. Without loss of generality (WLOG), let $i>j$. If $E(i) equiv E(j) mod n$, we have:
+Let $i, j in {1, 2, dots, n-1}$ be distinct integers, i.e. $i != j$. Without loss of generality (WLOG), let $i>j$. If $E(i) equiv E(j) mod n$, we have:
 
 $ a i + b equiv a j + b " "(mod n) $
 $ a (i - j) equiv 0 " "(mod n) $
@@ -479,7 +479,7 @@ $ a (i - j) = k n  $
 
 Since $gcd(a, n) = 1$, by euclid lemma, $n | (i - j)$. However, since $0 < i - j < n$, i is not divisible by $n$. This is a contradiction and thus $i = j$.
 
-Via pigeonhole principle, since there are $n$ possible outputs and $n$ possible inputs, and no two input maps to the same output, each input must map to a unique output. Hence, $E$ is a bijection.
+Via pigeonhole principle, since there are $n$ possible outputs and $n$ possible inputs, and no two input map to the same output, each input must map to a unique output. Hence, $E$ is a bijection.
 
 This also proves caesar cipher is a bijection as it is a special case of affine cipher where $a = 1$.
 
@@ -487,7 +487,7 @@ This also proves caesar cipher is a bijection as it is a special case of affine 
 
 = Proof of Fermat's Little Theorem(FLT)
 
-We can proof via more generalised Euler's theorem $a^phi(n) equiv 1 " "(mod n)$ or formal proof of FLT using bionmial distrubution. We will choose the latter, which is more intuitive and easier to understand. (To proof Euler's theorem, it's further down in the appendix)
+We can proof via more generalised Euler's theorem $a^phi(n) equiv 1 " "(mod n)$ or formal proof of FLT using binomial distrubution. We will choose the latter, which is more intuitive and easier to understand. (To prove Euler's theorem, it's further down in the appendix)
 #let theorem = thmbox("FLT", "Theorem", fill: rgb("#eeffee"))
 
 #theorem("FLT")[
