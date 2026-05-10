@@ -56,7 +56,7 @@ However, this cipher is easily broken when the trick is known as there are only 
 
 #align(center)[
   #table(
-    columns: (1.2fr,) + (0.4fr,) * 25,
+    columns: (1.2fr,) + (0.4fr,) * 26,
     stroke: 0.6pt + black,
     inset: 3pt,
     [Letter:], [A], [B], [C], [D], [E], [F], [G], [H], [I], [J], [K], [L], [M],[N], [O], [P], [Q], [R], [S], [T], [U], [V], [W], [X], [Y], [Z],
@@ -109,11 +109,7 @@ Fill in the affine mapping table (A=0, ..., Z=25) with $"modulo" 26$:
     [Letter:], [A], [B], [C], [D], [E], [F], [G], [H], [I], [J], [K], [L], [M],[N], [O], [P], [Q], [R], [S], [T], [U], [V], [W], [X], [Y], [Z],
     [x:], [0], [1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [1], [12], [13],[14], [15], [16], [17], [18], [19], [20], [21], [22], [23], [24], [25],
     [$5x + 8$:], [8], [13], [18], [23], [2], [7], [#blankcell()], [#blankcell()],
-    [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()],[#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()],
-    [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()],
-    [Result:], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()],
-    [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()],[#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()],
-    [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()],
+    [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()],[#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()], [#blankcell()]
   )
 ]
 
